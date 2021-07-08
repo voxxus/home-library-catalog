@@ -2,7 +2,7 @@
   <div id="app">
     <app-list :items="shelves">
       <template #items="{ item: books }">
-        <app-book-shelf>
+        <app-book-shelf @addBook="addBook(books)">
           <app-list :items="books">
             <template #items="{ item: book }">
               <app-book @editBook="editBook" :book="book" />
@@ -14,11 +14,13 @@
 
     <app-book-form
       v-if="showBookInfo"
+      @createBook="createBook"
       @saveBookInfo="saveBookInfo"
       @closeBookInfo="closeBookInfo"
       :show-book-form="showBookInfo"
       :book-info="bookInfo"
       :edit-mode="editMode"
+      :next-book-id="nextBookId"
     />
   </div>
 </template>
@@ -32,20 +34,25 @@ import AppBookForm from "@/components/AppBookInfo";
 
 export default {
   name: "App",
+
   components: {
     AppList,
     AppBookShelf,
     AppBook,
     AppBookForm,
   },
+
   data() {
     return {
       shelves: null,
       showBookInfo: false,
       bookInfo: null,
       editMode: false,
+      nextBookId: null,
+      currentShelf: null,
     };
   },
+
   created() {
     const firstShelf = booksData.slice(0, 3);
     const secondShelf = booksData.slice(3, 5);
@@ -53,12 +60,25 @@ export default {
 
     this.shelves = [firstShelf, secondShelf, thirdShelf];
   },
+
   methods: {
+    addBook(shelf) {
+      this.getNextBookId();
+      this.currentShelf = shelf;
+      this.showBookInfo = true;
+    },
+
     editBook(book) {
       this.editMode = true;
       this.showBookInfo = true;
       this.bookInfo = book;
     },
+
+    createBook(book) {
+      this.currentShelf.push(book);
+      this.closeBookInfo();
+    },
+
     saveBookInfo(book) {
       this.shelves.forEach((shelf) => {
         const index = shelf.findIndex((item) => item.id === book.id);
@@ -68,9 +88,20 @@ export default {
       });
       this.closeBookInfo();
     },
+
     closeBookInfo() {
       this.showBookInfo = false;
       this.bookInfo = null;
+      this.nextBookId = null;
+      this.currentShelf = null;
+      this.editMode = false;
+    },
+
+    getNextBookId() {
+      const allBooks = [];
+      this.shelves.forEach((shelf) => allBooks.push(...shelf));
+      allBooks.sort((a, b) => a.id - b.id);
+      this.nextBookId = allBooks[allBooks.length - 1].id + 1;
     },
   },
 };

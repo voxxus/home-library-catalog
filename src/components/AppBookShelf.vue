@@ -12,7 +12,9 @@
         <span class="bookshelf__arrow-down"></span>
       </div>
       <button class="button bookshelf__btn-reset">Сброс</button>
-      <button class="button bookshelf__btn-add">Добавить книгу</button>
+      <button @click="$emit('addBook')" class="button bookshelf__btn-add">
+        Добавить книгу
+      </button>
     </div>
     <slot></slot>
   </div>

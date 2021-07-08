@@ -10,7 +10,7 @@
         />
         <app-input
           :input-title="'Название книги'"
-          :input-placeholder="'Введите название киниги'"
+          :input-placeholder="'Введите название книги'"
           :input-type="'text'"
           v-model="editingBookData.title"
         />
@@ -42,6 +42,7 @@
           >
             Сохранить
           </button>
+
           <button
             @click="$emit('closeBookInfo')"
             class="button form__btn-cancel"
@@ -74,17 +75,26 @@ export default {
       type: Boolean,
       default: false,
     },
+    nextBookId: {
+      type: Number,
+      default: -1,
+    },
   },
   data() {
     return {
       editingBookData: {
-        id: this.bookInfo.id,
-        author: this.bookInfo.author || "",
-        title: this.bookInfo.title || "",
-        pages: this.bookInfo.pages.toString() || "",
-        year: this.bookInfo.year.toString() || "",
+        id: this.nextBookId,
+        author: "",
+        title: "",
+        pages: "",
+        year: "",
       },
     };
+  },
+  watch: {
+    bookInfo(book) {
+      Object.assign(this.editingBookData, book);
+    },
   },
 };
 </script>
