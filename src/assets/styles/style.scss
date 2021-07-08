@@ -1,1 +1,14 @@
+@import "fonts";
 @import "clear";
+
+
+.button {
+	padding: 5px;
+	border: 1px solid black;
+	border-radius: 6px;
+	cursor: pointer;
+
+	&:active {
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	}
+}

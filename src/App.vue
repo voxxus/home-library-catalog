@@ -18,6 +18,7 @@
       @closeBookInfo="closeBookInfo"
       :show-book-form="showBookInfo"
       :book-info="bookInfo"
+      :edit-mode="editMode"
     />
   </div>
 </template>
@@ -42,6 +43,7 @@ export default {
       shelves: null,
       showBookInfo: false,
       bookInfo: null,
+      editMode: false,
     };
   },
   created() {
@@ -53,6 +55,7 @@ export default {
   },
   methods: {
     editBook(book) {
+      this.editMode = true;
       this.showBookInfo = true;
       this.bookInfo = book;
     },
