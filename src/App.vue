@@ -1,28 +1,39 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <app-list :items="shelves">
+      <template #items="{ item: books }">
+        <app-list :items="books">
+          <template #items="{ item: book }">
+            {{ book }}
+          </template>
+        </app-list>
+      </template>
+    </app-list>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import booksData from "./mock/books.json";
+import AppList from "@/components/AppList";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    AppList,
+  },
+  data() {
+    return {
+      shelves: null,
+    };
+  },
+  created() {
+    const firstShelf = booksData.slice(0, 3);
+    const secondShelf = booksData.slice(3, 5);
+    const thirdShelf = booksData.slice(5);
+
+    this.shelves = [firstShelf, secondShelf, thirdShelf];
   },
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss"></style>
