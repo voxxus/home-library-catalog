@@ -20,6 +20,8 @@ export default {
 
 <style scoped>
 .list {
-  margin-bottom: 30px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 </style>

@@ -2,11 +2,13 @@
   <div id="app">
     <app-list :items="shelves">
       <template #items="{ item: books }">
-        <app-list :items="books">
-          <template #items="{ item: book }">
-            {{ book }}
-          </template>
-        </app-list>
+        <app-book-shelf>
+          <app-list :items="books">
+            <template #items="{ item: book }">
+              <app-book :book="book" />
+            </template>
+          </app-list>
+        </app-book-shelf>
       </template>
     </app-list>
   </div>
@@ -15,11 +17,15 @@
 <script>
 import booksData from "./mock/books.json";
 import AppList from "@/components/AppList";
+import AppBookShelf from "@/components/AppBookShelf";
+import AppBook from "@/components/AppBook";
 
 export default {
   name: "App",
   components: {
     AppList,
+    AppBookShelf,
+    AppBook,
   },
   data() {
     return {
