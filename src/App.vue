@@ -5,12 +5,20 @@
         <app-book-shelf>
           <app-list :items="books">
             <template #items="{ item: book }">
-              <app-book :book="book" />
+              <app-book @editBook="editBook" :book="book" />
             </template>
           </app-list>
         </app-book-shelf>
       </template>
     </app-list>
+
+    <app-book-form
+      v-if="showBookInfo"
+      @saveBookInfo="saveBookInfo"
+      @closeBookInfo="closeBookInfo"
+      :show-book-form="showBookInfo"
+      :book-info="bookInfo"
+    />
   </div>
 </template>
 
@@ -19,6 +27,7 @@ import booksData from "./mock/books.json";
 import AppList from "@/components/AppList";
 import AppBookShelf from "@/components/AppBookShelf";
 import AppBook from "@/components/AppBook";
+import AppBookForm from "@/components/AppBookInfo";
 
 export default {
   name: "App",
@@ -26,10 +35,13 @@ export default {
     AppList,
     AppBookShelf,
     AppBook,
+    AppBookForm,
   },
   data() {
     return {
       shelves: null,
+      showBookInfo: false,
+      bookInfo: null,
     };
   },
   created() {
@@ -39,7 +51,28 @@ export default {
 
     this.shelves = [firstShelf, secondShelf, thirdShelf];
   },
+  methods: {
+    editBook(book) {
+      this.showBookInfo = true;
+      this.bookInfo = book;
+    },
+    saveBookInfo(book) {
+      this.shelves.forEach((shelf) => {
+        const index = shelf.findIndex((item) => item.id === book.id);
+        if (index !== -1) {
+          shelf.splice(index, 1, book);
+        }
+      });
+      this.closeBookInfo();
+    },
+    closeBookInfo() {
+      this.showBookInfo = false;
+      this.bookInfo = null;
+    },
+  },
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import "./assets/styles/style";
+</style>

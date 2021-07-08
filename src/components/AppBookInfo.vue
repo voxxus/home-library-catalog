@@ -1,0 +1,94 @@
+<template>
+  <div class="book-info">
+    <div class="book-info__wrapper">
+      <app-input
+        :input-title="'Автор'"
+        :input-placeholder="'Введите имя автора'"
+        :input-type="'text'"
+        v-model="editingBookData.author"
+      />
+      <app-input
+        :input-title="'Название книги'"
+        :input-placeholder="'Введите название киниги'"
+        :input-type="'text'"
+        v-model="editingBookData.title"
+      />
+      <app-input
+        :input-title="'Количество страниц'"
+        :input-placeholder="'Введите количество страниц'"
+        :input-type="'number'"
+        v-model="editingBookData.pages"
+      />
+      <app-input
+        :input-title="'Год написания'"
+        :input-placeholder="'Введите год написания'"
+        :input-type="'number'"
+        v-model="editingBookData.year"
+      />
+
+      <div class="book-info__controls">
+        <button
+          @click="$emit('saveBookInfo', editingBookData)"
+          class="button form__btn-save"
+        >
+          Сохранить
+        </button>
+        <button @click="$emit('closeBookInfo')" class="button form__btn-cancel">
+          Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import AppInput from "@/components/AppInput";
+export default {
+  name: "AppBookInfo",
+  components: {
+    AppInput,
+  },
+  props: {
+    showBookForm: {
+      type: Boolean,
+      default: false,
+    },
+    bookInfo: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  data() {
+    return {
+      editingBookData: {
+        id: this.bookInfo.id,
+        author: this.bookInfo.author || "",
+        title: this.bookInfo.title || "",
+        pages: this.bookInfo.pages.toString() || "",
+        year: this.bookInfo.year.toString() || "",
+      },
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.book-info {
+  max-width: 30%;
+  height: 100vh;
+  position: absolute;
+  background-color: aliceblue;
+  top: 0;
+  right: 0;
+
+  &__wrapper {
+    padding: 20px 50px;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+</style>
