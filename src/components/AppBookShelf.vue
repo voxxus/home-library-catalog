@@ -39,6 +39,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    user-select: none;
   }
 }
 </style>

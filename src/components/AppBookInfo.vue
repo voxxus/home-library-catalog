@@ -57,6 +57,7 @@
 
 <script>
 import AppInput from "@/components/AppInput";
+
 export default {
   name: "AppBookInfo",
   components: {
@@ -82,19 +83,21 @@ export default {
   },
   data() {
     return {
-      editingBookData: {
+      editingBookData: {},
+    };
+  },
+  created() {
+    if (this.editMode) {
+      Object.assign(this.editingBookData, this.bookInfo);
+    } else {
+      this.editingBookData = {
         id: this.nextBookId,
         author: "",
         title: "",
         pages: "",
         year: "",
-      },
-    };
-  },
-  watch: {
-    bookInfo(book) {
-      Object.assign(this.editingBookData, book);
-    },
+      };
+    }
   },
 };
 </script>
