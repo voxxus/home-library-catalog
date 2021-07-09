@@ -49,6 +49,13 @@
           >
             Отмена
           </button>
+          <button
+            v-if="editMode"
+            @click="$emit('deleteBook', editingBookData)"
+            class="button form__btn-delete"
+          >
+            Удалить
+          </button>
         </div>
       </div>
     </div>
@@ -129,6 +136,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+
+    & > .button {
+      //flex: 50%;
+      min-width: 40%;
+      margin-bottom: 25px;
+      align-content: start;
+    }
   }
 }
 </style>

@@ -41,5 +41,15 @@ export default {
     margin-bottom: 20px;
     user-select: none;
   }
+
+  &__sort-author,
+  &__sort-title {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
 }
 </style>

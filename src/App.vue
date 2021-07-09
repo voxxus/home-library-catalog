@@ -17,6 +17,7 @@
       @createBook="createBook"
       @saveBookInfo="saveBookInfo"
       @closeBookInfo="closeBookInfo"
+      @deleteBook="deleteBook"
       :show-book-form="showBookInfo"
       :book-info="bookInfo"
       :edit-mode="editMode"
@@ -55,8 +56,8 @@ export default {
 
   created() {
     const firstShelf = booksData.slice(0, 3);
-    const secondShelf = booksData.slice(3, 5);
-    const thirdShelf = booksData.slice(5);
+    const secondShelf = booksData.slice(3, 4);
+    const thirdShelf = booksData.slice(4);
 
     this.shelves = [firstShelf, secondShelf, thirdShelf];
   },
@@ -84,6 +85,16 @@ export default {
         const index = shelf.findIndex((item) => item.id === book.id);
         if (index !== -1) {
           shelf.splice(index, 1, book);
+        }
+      });
+      this.closeBookInfo();
+    },
+
+    deleteBook(book) {
+      this.shelves.forEach((shelf) => {
+        const index = shelf.findIndex((item) => item.id === book.id);
+        if (index !== -1) {
+          shelf.splice(index, 1);
         }
       });
       this.closeBookInfo();
