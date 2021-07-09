@@ -119,6 +119,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.39);
   z-index: 10;
 }
+
 .book-info {
   max-width: 30%;
   height: 100vh;

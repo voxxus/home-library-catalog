@@ -27,9 +27,20 @@
     <app-modal-window v-if="showModalWindow">
       <template #title>Удаление книги</template>
       <template #content>
-        <p class="modal-text">Вы действительно хотите удалить книгу?</p>
-        <button class="button">Удалить</button>
-        <button class="button">Отмена</button>
+        <p class="modal-text">
+          Вы действительно хотите удалить книгу '{{ bookToDelete.title }}'?
+        </p>
+        <div class="modal-controls">
+          <button
+            @click="deleteBook(bookToDelete)"
+            class="button modal-btn-delete"
+          >
+            Удалить
+          </button>
+          <button @click="closeModalWindow" class="button modal-btn-delete">
+            Отмена
+          </button>
+        </div>
       </template>
     </app-modal-window>
   </div>
@@ -63,6 +74,7 @@ export default {
       nextBookId: null,
       currentShelf: null,
       showModalWindow: false,
+      bookToDelete: null,
     };
   },
 
@@ -103,10 +115,8 @@ export default {
     },
 
     confirmDeleteBook(book) {
-      const answer = confirm("Удалить книгу?");
-      if (answer) {
-        this.deleteBook(book);
-      }
+      this.showModalWindow = true;
+      this.bookToDelete = book;
     },
 
     deleteBook(book) {
@@ -117,6 +127,7 @@ export default {
         }
       });
       this.closeBookInfo();
+      this.closeModalWindow();
     },
 
     closeBookInfo() {
@@ -133,10 +144,25 @@ export default {
       allBooks.sort((a, b) => a.id - b.id);
       this.nextBookId = allBooks[allBooks.length - 1].id + 1;
     },
+
+    closeModalWindow() {
+      this.showModalWindow = false;
+      this.bookToDelete = false;
+    },
   },
 };
 </script>
 
 <style lang="scss">
 @import "./assets/styles/style";
+
+.modal-text {
+  margin-bottom: 15px;
+}
+
+.modal-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

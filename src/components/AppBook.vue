@@ -38,7 +38,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .spine {
   display: flex;
   justify-content: space-between;
