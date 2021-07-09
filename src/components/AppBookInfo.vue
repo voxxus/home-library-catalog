@@ -51,7 +51,7 @@
           </button>
           <button
             v-if="editMode"
-            @click="$emit('deleteBook', editingBookData)"
+            @click="$emit('confirmDeleteBook', editingBookData)"
             class="button form__btn-delete"
           >
             Удалить

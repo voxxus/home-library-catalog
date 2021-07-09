@@ -17,12 +17,21 @@
       @createBook="createBook"
       @saveBookInfo="saveBookInfo"
       @closeBookInfo="closeBookInfo"
-      @deleteBook="deleteBook"
+      @confirmDeleteBook="confirmDeleteBook"
       :show-book-form="showBookInfo"
       :book-info="bookInfo"
       :edit-mode="editMode"
       :next-book-id="nextBookId"
     />
+
+    <app-modal-window v-if="showModalWindow">
+      <template #title>Удаление книги</template>
+      <template #content>
+        <p class="modal-text">Вы действительно хотите удалить книгу?</p>
+        <button class="button">Удалить</button>
+        <button class="button">Отмена</button>
+      </template>
+    </app-modal-window>
   </div>
 </template>
 
@@ -32,11 +41,13 @@ import AppList from "@/components/AppList";
 import AppBookShelf from "@/components/AppBookShelf";
 import AppBook from "@/components/AppBook";
 import AppBookForm from "@/components/AppBookInfo";
+import AppModalWindow from "@/components/AppModalWindow";
 
 export default {
   name: "App",
 
   components: {
+    AppModalWindow,
     AppList,
     AppBookShelf,
     AppBook,
@@ -51,6 +62,7 @@ export default {
       editMode: false,
       nextBookId: null,
       currentShelf: null,
+      showModalWindow: false,
     };
   },
 
@@ -88,6 +100,13 @@ export default {
         }
       });
       this.closeBookInfo();
+    },
+
+    confirmDeleteBook(book) {
+      const answer = confirm("Удалить книгу?");
+      if (answer) {
+        this.deleteBook(book);
+      }
     },
 
     deleteBook(book) {
