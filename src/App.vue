@@ -79,6 +79,8 @@ export default {
   },
 
   created() {
+    document.title = "Каталог домашней библиотеки";
+
     const firstShelf = booksData.slice(0, 3);
     const secondShelf = booksData.slice(3, 4);
     const thirdShelf = booksData.slice(4);

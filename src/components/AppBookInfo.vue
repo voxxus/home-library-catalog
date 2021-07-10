@@ -2,61 +2,55 @@
   <div class="outer">
     <div class="book-info">
       <div class="book-info__wrapper">
-        <app-input
-          :input-title="'Автор'"
-          :input-placeholder="'Введите имя автора'"
-          :input-type="'text'"
-          v-model="editingBookData.author"
-        />
-        <app-input
-          :input-title="'Название книги'"
-          :input-placeholder="'Введите название книги'"
-          :input-type="'text'"
-          v-model="editingBookData.title"
-        />
-        <app-input
-          :input-title="'Количество страниц'"
-          :input-placeholder="'Введите количество страниц'"
-          :input-type="'number'"
-          v-model="editingBookData.pages"
-        />
-        <app-input
-          :input-title="'Год написания'"
-          :input-placeholder="'Введите год написания'"
-          :input-type="'number'"
-          v-model="editingBookData.year"
-        />
+        <form @submit.prevent="checkForm" class="form">
+          <app-input
+            :input-title="'ФИО автора'"
+            :input-placeholder="'Введите ФИО автора'"
+            :input-type="'text'"
+            :required="true"
+            v-model="editingBookData.author"
+          />
+          <app-input
+            :input-title="'Название книги'"
+            :input-placeholder="'Введите название книги'"
+            :input-type="'text'"
+            :required="true"
+            v-model="editingBookData.title"
+          />
+          <app-input
+            :input-title="'Количество страниц'"
+            :input-placeholder="'Введите количество страниц'"
+            :input-type="'number'"
+            v-model="editingBookData.pages"
+          />
+          <app-input
+            :input-title="'Год написания'"
+            :input-placeholder="'Введите год написания'"
+            :input-type="'number'"
+            v-model="editingBookData.year"
+          />
 
-        <div class="book-info__controls">
-          <button
-            v-if="editMode"
-            @click="$emit('saveBookInfo', editingBookData)"
-            class="button form__btn-save"
-          >
-            Сохранить
-          </button>
-          <button
-            v-else
-            @click="$emit('createBook', editingBookData)"
-            class="button form__btn-save"
-          >
-            Сохранить
-          </button>
-
-          <button
-            @click="$emit('closeBookInfo')"
-            class="button form__btn-cancel"
-          >
-            Отмена
-          </button>
-          <button
-            v-if="editMode"
-            @click="$emit('confirmDeleteBook', editingBookData)"
-            class="button form__btn-delete"
-          >
-            Удалить
-          </button>
-        </div>
+          <div class="book-info__controls">
+            <button type="submit" class="button form__btn-save">
+              Сохранить
+            </button>
+            <button
+              @click="$emit('closeBookInfo')"
+              type="button"
+              class="button form__btn-cancel"
+            >
+              Отмена
+            </button>
+            <button
+              v-if="editMode"
+              type="button"
+              @click="$emit('confirmDeleteBook', editingBookData)"
+              class="button form__btn-delete"
+            >
+              Удалить
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -105,6 +99,20 @@ export default {
         year: "",
       };
     }
+  },
+  methods: {
+    checkForm() {
+      if (this.editingBookData.author && this.editingBookData.title) {
+        Object.entries(this.editingBookData).map((property) => {
+          if (property[0] !== "id") {
+            this.editingBookData[property[0]] = property[1].trim();
+          }
+        });
+
+        if (this.editMode) this.$emit("saveBookInfo", this.editingBookData);
+        else this.$emit("createBook", this.editingBookData);
+      }
+    },
   },
 };
 </script>
