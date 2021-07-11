@@ -1,6 +1,10 @@
 <template>
   <div class="book">
-    <div @click="$emit('editBook', book)" class="book__spine spine">
+    <div
+      @click="$emit('editBook', book)"
+      :class="{ 'spine-anim': isEditing }"
+      class="book__spine spine"
+    >
       <div class="spine__author">
         {{ getAuthorInitials }}
       </div>
@@ -8,6 +12,11 @@
         {{ book.title }}
       </div>
     </div>
+    <!--    <div v-if="isEditing" class="book__cover cover">-->
+    <!--      <div class="cover__author">{{ book.author }}</div>-->
+    <!--      <div class="cover__title">{{ book.title }}</div>-->
+    <!--      <div class="cover__year">{{ book.year }}</div>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -16,6 +25,10 @@ export default {
   name: "AppBook",
   props: {
     book: {
+      type: Object,
+      default: () => {},
+    },
+    editingBookInfo: {
       type: Object,
       default: () => {},
     },
@@ -32,6 +45,10 @@ export default {
           }
         })
         .join(" ");
+    },
+
+    isEditing() {
+      return this.book.id === this.editingBookInfo?.id;
     },
   },
 };
@@ -50,9 +67,14 @@ export default {
   text-transform: uppercase;
   font-family: "Oswald", sans-serif;
   cursor: pointer;
+  transition: 1s all;
 
   &__author {
     font-weight: 700;
   }
+}
+
+.spine-anim {
+  transform: translate(130%, 500%) rotate(90deg);
 }
 </style>

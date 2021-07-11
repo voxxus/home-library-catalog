@@ -3,11 +3,16 @@
     <app-list :items="shelves">
       <template #items="{ item: books }">
         <app-book-shelf @addBook="addBook(books)">
-          <app-list :items="books">
+          <app-list v-if="books.length" :items="books">
             <template #items="{ item: book }">
-              <app-book @editBook="editBook" :book="book" />
+              <app-book
+                @editBook="editBook"
+                :editing-book-info="bookInfo"
+                :book="book"
+              />
             </template>
           </app-list>
+          <div v-else class="message">В этой полке книг нет :(</div>
         </app-book-shelf>
       </template>
     </app-list>
@@ -166,5 +171,10 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.message {
+  margin: 25px 0;
+  text-align: center;
 }
 </style>
