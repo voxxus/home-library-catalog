@@ -101,7 +101,6 @@ export default {
   max-width: 30%;
   min-height: 30%;
   border: 3px solid #652121;
-  //background-color: rgba(165, 42, 42, 0.83);
   background: url("../assets/images/bookshelf-bg.jpg") center center / cover
     no-repeat;
   padding: 10px 10px 0;
@@ -112,8 +111,8 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    font-size: 15px;
     user-select: none;
-    //font-weight: 700;
     color: #fff;
   }
 

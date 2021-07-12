@@ -124,15 +124,15 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 0.39);
   z-index: 10;
 }
 
 .book-info {
   max-width: 30%;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   background-color: aliceblue;
+  border-left: 1px solid #000;
   top: 0;
   right: 0;
   z-index: 100;
@@ -148,7 +148,6 @@ export default {
     flex-wrap: wrap;
 
     & > .button {
-      //flex: 50%;
       min-width: 40%;
       margin-bottom: 25px;
       align-content: start;

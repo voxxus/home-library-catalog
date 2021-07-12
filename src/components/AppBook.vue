@@ -1,22 +1,16 @@
 <template>
   <div class="book">
-    <div
-      @click="$emit('editBook', book)"
-      :class="{ 'spine-anim': isEditing }"
-      class="book__spine spine"
-    >
-      <div class="spine__author">
-        {{ getAuthorInitials }}
+    <div :class="{ 'book__inner--opened': isEditing }" class="book__inner">
+      <div @click="$emit('editBook', book)" class="book__spine spine">
+        <div class="spine__author">{{ getAuthorInitials }}</div>
+        <div class="spine__title">{{ book.title }}</div>
       </div>
-      <div class="spine__title">
-        {{ book.title }}
+      <div class="book__cover cover">
+        <div class="cover__author">{{ book.author }}</div>
+        <div class="cover__title">{{ book.title }}</div>
+        <div class="cover__year">{{ book.year }}</div>
       </div>
     </div>
-    <!--    <div v-if="isEditing" class="book__cover cover">-->
-    <!--      <div class="cover__author">{{ book.author }}</div>-->
-    <!--      <div class="cover__title">{{ book.title }}</div>-->
-    <!--      <div class="cover__year">{{ book.year }}</div>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -55,26 +49,71 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.spine {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 50px;
-  padding: 0 10px;
-  border: 2px solid black;
-  border-radius: 6px;
-  background-color: gray;
-  text-transform: uppercase;
-  font-family: "Oswald", sans-serif;
-  cursor: pointer;
-  transition: 1s all;
+.book {
+  position: relative;
+  height: 50px;
+  width: 25vw;
+  perspective: 50000px;
 
-  &__author {
+  &__inner {
+    width: inherit;
+    height: inherit;
+    transform-style: preserve-3d;
+    transform: rotate(0deg) rotateX(0deg);
+    transition: 0.5s all;
+
+    &--opened {
+      transform: translate(130%, 400%) rotate(90deg) rotateX(-90deg);
+    }
+  }
+
+  &__spine {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border: 2px solid #000;
+    border-radius: 5px;
+    font-family: "Oswald", sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    text-transform: uppercase;
+    background-color: gray;
+    cursor: pointer;
+  }
+
+  .spine__author {
     font-weight: 700;
   }
-}
 
-.spine-anim {
-  transform: translate(130%, 500%) rotate(90deg);
+  &__cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    padding: 30px 15px;
+    font-family: "Oswald", sans-serif;
+    position: absolute;
+    width: 20vw;
+    height: 25vw;
+    border: 2px solid #000;
+    border-radius: 5px;
+    background-color: gray;
+    transform: rotate(-90deg) rotateY(90deg) rotateX(0deg) translateX(10vw)
+      translateZ(25vh) translateY(48px);
+  }
+
+  .cover__title {
+    font-size: 30px;
+  }
+
+  .cover__author {
+    font-size: 25px;
+  }
+
+  .cover__year {
+    font-size: 18px;
+  }
 }
 </style>

@@ -1,14 +1,17 @@
 @import "fonts";
 @import "clear";
 
+* {
+  box-sizing: border-box;
+}
 
 .button {
-	padding: 5px;
-	border: 1px solid black;
-	border-radius: 6px;
-	cursor: pointer;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 6px;
+  cursor: pointer;
 
-	&:active {
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-	}
+  &:active {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
 }

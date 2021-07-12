@@ -61,7 +61,6 @@ export default {
   }
 
   &__field {
-    height: 20px;
     padding: 5px;
 
     &::placeholder {

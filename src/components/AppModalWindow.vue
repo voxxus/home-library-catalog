@@ -37,7 +37,6 @@ export default {
   }
 
   &__window {
-    //height: 25vh;
     width: 20vw;
     background-color: #fff;
     border: 1px solid #000;
