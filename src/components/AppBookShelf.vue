@@ -39,12 +39,12 @@
           >&nbsp;&darr;</span
         >
       </div>
-      <button @click="resetSort" class="button bookshelf__btn-reset">
+      <span @click="resetSort" class="bookshelf__reset">
         Сброс сортировки
-      </button>
-      <button @click="$emit('addBook')" class="button bookshelf__btn-add">
+      </span>
+      <span @click="$emit('addBook')" class="bookshelf__add">
         Добавить книгу
-      </button>
+      </span>
     </div>
     <slot></slot>
   </div>
@@ -100,8 +100,10 @@ export default {
 .bookshelf {
   max-width: 30%;
   min-height: 30%;
-  border: 3px solid black;
-  background-color: rgba(165, 42, 42, 0.83);
+  border: 3px solid #652121;
+  //background-color: rgba(165, 42, 42, 0.83);
+  background: url("../assets/images/bookshelf-bg.jpg") center center / cover
+    no-repeat;
   padding: 10px 10px 0;
   transition: 0.3s all;
 
@@ -111,10 +113,14 @@ export default {
     align-items: center;
     margin-bottom: 20px;
     user-select: none;
+    //font-weight: 700;
+    color: #fff;
   }
 
   &__sort-author,
-  &__sort-title {
+  &__sort-title,
+  &__reset,
+  &__add {
     cursor: pointer;
 
     &:hover {
@@ -124,11 +130,11 @@ export default {
   }
 
   &__arrow-up--active {
-    color: #fff;
+    color: #a86c37;
   }
 
   &__arrow-down--active {
-    color: #fff;
+    color: #a86c37;
   }
 }
 </style>
