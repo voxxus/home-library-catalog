@@ -2,7 +2,7 @@
   <div id="app">
     <app-list :items="shelves">
       <template #items="{ item: books }">
-        <app-book-shelf @addBook="addBook(books)">
+        <app-book-shelf @addBook="addBook(books)" :books="books">
           <app-list v-if="books.length" :items="books">
             <template #items="{ item: book }">
               <app-book
