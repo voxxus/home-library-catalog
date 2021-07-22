@@ -1,7 +1,7 @@
 <template>
   <div class="bookshelf">
     <div class="bookshelf__controls">
-      <div @click="sortBooks('author')" class="bookshelf__sort-author">
+      <div @click="sortBooks('author.lastName')" class="bookshelf__sort-author">
         <span class="bookshelf__sort-text">По автору</span>
         <span
           :class="{
@@ -76,16 +76,32 @@ export default {
 
     sortBooksBy(property, order) {
       this.sortDirection = order;
-      return (a, b) => {
-        const prevBook = a[property].toLowerCase();
-        const nextBook = b[property].toLowerCase();
-        let comparison = 0;
 
-        if (prevBook > nextBook) comparison = 1;
-        else if (prevBook < nextBook) comparison = -1;
+      if (property.includes(".")) {
+        const properties = property.split(".");
+        const [prop, nestedProp] = properties;
+        return (a, b) => {
+          const prevBook = a[prop][nestedProp].toLowerCase();
+          const nextBook = b[prop][nestedProp].toLowerCase();
+          let comparison = 0;
 
-        return order === "desc" ? comparison * -1 : comparison;
-      };
+          if (prevBook > nextBook) comparison = 1;
+          else if (prevBook < nextBook) comparison = -1;
+
+          return order === "desc" ? comparison * -1 : comparison;
+        };
+      } else {
+        return (a, b) => {
+          const prevBook = a[property].toLowerCase();
+          const nextBook = b[property].toLowerCase();
+          let comparison = 0;
+
+          if (prevBook > nextBook) comparison = 1;
+          else if (prevBook < nextBook) comparison = -1;
+
+          return order === "desc" ? comparison * -1 : comparison;
+        };
+      }
     },
 
     resetSort() {

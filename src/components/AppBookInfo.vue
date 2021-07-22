@@ -4,30 +4,44 @@
       <div class="book-info__wrapper">
         <form @submit.prevent="checkForm" class="form">
           <app-input
-            :input-title="'ФИО автора'"
-            :input-placeholder="'Введите ФИО автора'"
-            :input-type="'text'"
+            input-title="Фамилия автора"
+            input-placeholder="Введите фамилию автора"
+            input-type="text"
             :required="true"
-            v-model="editingBookData.author"
+            v-model.trim="editingBookData.author.lastName"
           />
           <app-input
-            :input-title="'Название книги'"
-            :input-placeholder="'Введите название книги'"
-            :input-type="'text'"
+            input-title="Имя автора"
+            input-placeholder="Введите имя автора"
+            input-type="text"
             :required="true"
-            v-model="editingBookData.title"
+            v-model.trim="editingBookData.author.firstName"
           />
           <app-input
-            :input-title="'Количество страниц'"
-            :input-placeholder="'Введите количество страниц'"
-            :input-type="'number'"
-            v-model="editingBookData.pages"
+            input-title="Отчество автора"
+            input-placeholder="Введите отчество автора"
+            input-type="text"
+            :required="false"
+            v-model.trim="editingBookData.author.secondName"
           />
           <app-input
-            :input-title="'Год написания'"
-            :input-placeholder="'Введите год написания'"
-            :input-type="'number'"
-            v-model="editingBookData.year"
+            input-title="Название книги"
+            input-placeholder="Введите название книги"
+            input-type="text"
+            :required="true"
+            v-model.trim="editingBookData.title"
+          />
+          <app-input
+            input-title="Количество страниц"
+            input-placeholder="Введите количество страниц"
+            input-type="number"
+            v-model.trim="editingBookData.pages"
+          />
+          <app-input
+            input-title="Год написания"
+            input-placeholder="Введите год написания"
+            input-type="number"
+            v-model.trim="editingBookData.year"
           />
 
           <div class="book-info__controls">
@@ -93,7 +107,11 @@ export default {
     } else {
       this.editingBookData = {
         id: this.nextBookId,
-        author: "",
+        author: {
+          lastName: "",
+          firstName: "",
+          secondName: "",
+        },
         title: "",
         pages: "",
         year: "",
@@ -102,16 +120,8 @@ export default {
   },
   methods: {
     checkForm() {
-      if (this.editingBookData.author && this.editingBookData.title) {
-        Object.entries(this.editingBookData).map((property) => {
-          if (property[0] !== "id") {
-            this.editingBookData[property[0]] = property[1].trim();
-          }
-        });
-
-        if (this.editMode) this.$emit("saveBookInfo", this.editingBookData);
-        else this.$emit("createBook", this.editingBookData);
-      }
+      if (this.editMode) this.$emit("saveBookInfo", this.editingBookData);
+      else this.$emit("createBook", this.editingBookData);
     },
   },
 };

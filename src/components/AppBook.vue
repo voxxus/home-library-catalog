@@ -6,7 +6,7 @@
         <div class="spine__title">{{ book.title }}</div>
       </div>
       <div class="book__cover cover">
-        <div class="cover__author">{{ book.author }}</div>
+        <div class="cover__author">{{ getAuthorFullName }}</div>
         <div class="cover__title">{{ book.title }}</div>
         <div class="cover__year">{{ book.year }}</div>
       </div>
@@ -29,16 +29,18 @@ export default {
   },
   computed: {
     getAuthorInitials() {
-      const authorNameArr = this.book.author.split(" ");
-      return authorNameArr
-        .map((name) => {
-          if (name !== authorNameArr[0]) {
-            return `${name[0]}.`;
-          } else {
-            return name;
-          }
+      return Object.values(this.book.author)
+        .filter((item) => item)
+        .map((name, index, array) => {
+          if (index !== 0) return `${name[0]}.`;
+          else if (typeof name === "undefined") array.splice(index, 1, "key");
+          else return name;
         })
         .join(" ");
+    },
+
+    getAuthorFullName() {
+      return Object.values(this.book.author).join(" ");
     },
 
     isEditing() {
