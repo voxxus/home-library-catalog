@@ -9,8 +9,8 @@
       :placeholder="inputPlaceholder"
       :value="value"
       :required="required"
-      @input="$emit('input', $event.target.value)"
       class="input__field"
+      @input="$emit('input', $event.target.value)"
     />
   </div>
 </template>
@@ -23,18 +23,22 @@ export default {
       type: String,
       default: "Поле ввода",
     },
+
     inputType: {
       type: String,
       default: "text",
     },
+
     inputPlaceholder: {
       type: String,
       default: "Поле ввода",
     },
+
     value: {
       type: String,
       default: "",
     },
+
     required: {
       type: Boolean,
       default: false,

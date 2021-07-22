@@ -1,7 +1,7 @@
 <template>
   <div class="book">
     <div :class="{ 'book__inner--opened': isEditing }" class="book__inner">
-      <div @click="$emit('editBook', book)" class="book__spine spine">
+      <div class="book__spine spine" @click="$emit('editBook', book)">
         <div class="spine__author">{{ getAuthorInitials }}</div>
         <div class="spine__title">{{ book.title }}</div>
       </div>
@@ -20,20 +20,21 @@ export default {
   props: {
     book: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
+
     editingBookInfo: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
+
   computed: {
     getAuthorInitials() {
       return Object.values(this.book.author)
         .filter((item) => item)
-        .map((name, index, array) => {
+        .map((name, index) => {
           if (index !== 0) return `${name[0]}.`;
-          else if (typeof name === "undefined") array.splice(index, 1, "key");
           else return name;
         })
         .join(" ");

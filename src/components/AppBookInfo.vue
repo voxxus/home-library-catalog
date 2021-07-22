@@ -4,44 +4,49 @@
       <div class="book-info__wrapper">
         <form @submit.prevent="checkForm" class="form">
           <app-input
+            v-model.trim="editingBookData.author.lastName"
+            :required="true"
             input-title="Фамилия автора"
             input-placeholder="Введите фамилию автора"
             input-type="text"
-            :required="true"
-            v-model.trim="editingBookData.author.lastName"
           />
+
           <app-input
+            v-model.trim="editingBookData.author.firstName"
+            :required="true"
             input-title="Имя автора"
             input-placeholder="Введите имя автора"
             input-type="text"
-            :required="true"
-            v-model.trim="editingBookData.author.firstName"
           />
+
           <app-input
+            v-model.trim="editingBookData.author.secondName"
+            :required="false"
             input-title="Отчество автора"
             input-placeholder="Введите отчество автора"
             input-type="text"
-            :required="false"
-            v-model.trim="editingBookData.author.secondName"
           />
+
           <app-input
+            v-model.trim="editingBookData.title"
+            :required="true"
             input-title="Название книги"
             input-placeholder="Введите название книги"
             input-type="text"
-            :required="true"
-            v-model.trim="editingBookData.title"
           />
+
           <app-input
+            v-model.trim="editingBookData.pages"
             input-title="Количество страниц"
             input-placeholder="Введите количество страниц"
             input-type="number"
-            v-model.trim="editingBookData.pages"
           />
+
           <app-input
+            v-model.trim="editingBookData.year"
             input-title="Год написания"
             input-placeholder="Введите год написания"
             input-type="number"
-            v-model.trim="editingBookData.year"
           />
 
           <div class="book-info__controls">
@@ -49,17 +54,17 @@
               Сохранить
             </button>
             <button
-              @click="$emit('closeBookInfo')"
               type="button"
               class="button form__btn-cancel"
+              @click="$emit('closeBookInfo')"
             >
               Отмена
             </button>
             <button
               v-if="editMode"
               type="button"
-              @click="$emit('confirmDeleteBook', editingBookData)"
               class="button form__btn-delete"
+              @click="$emit('confirmDeleteBook', editingBookData)"
             >
               Удалить
             </button>
@@ -78,32 +83,38 @@ export default {
   components: {
     AppInput,
   },
+
   props: {
     showBookForm: {
       type: Boolean,
       default: false,
     },
+
     bookInfo: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
+
     editMode: {
       type: Boolean,
       default: false,
     },
+
     nextBookId: {
       type: Number,
       default: -1,
     },
   },
+
   data() {
     return {
       editingBookData: {},
     };
   },
+
   created() {
     if (this.editMode) {
-      Object.assign(this.editingBookData, this.bookInfo);
+      this.editingBookData = JSON.parse(JSON.stringify(this.bookInfo));
     } else {
       this.editingBookData = {
         id: this.nextBookId,
@@ -118,6 +129,7 @@ export default {
       };
     }
   },
+
   methods: {
     checkForm() {
       if (this.editMode) this.$emit("saveBookInfo", this.editingBookData);

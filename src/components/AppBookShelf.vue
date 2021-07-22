@@ -1,48 +1,28 @@
 <template>
   <div class="bookshelf">
     <div class="bookshelf__controls">
-      <div @click="sortBooks('author.lastName')" class="bookshelf__sort-author">
+      <div class="bookshelf__sort-author" @click="sortBooks('author.lastName')">
         <span class="bookshelf__sort-text">По автору</span>
-        <span
-          :class="{
-            'bookshelf__arrow-up--active':
-              this.sortDirection === 'asc' && this.sortKey === 'author',
-          }"
-          class="bookshelf__arrow-up"
-          >&nbsp;&uarr;</span
-        >
-        <span
-          :class="{
-            'bookshelf__arrow-down--active':
-              this.sortDirection === 'desc' && this.sortKey === 'author',
-          }"
-          class="bookshelf__arrow-down"
-          >&nbsp;&darr;</span
-        >
+        <span :class="isArrowUpActiveAuthor" class="bookshelf__arrow-up">
+          &nbsp;&uarr;
+        </span>
+        <span :class="isArrowDownActiveAuthor" class="bookshelf__arrow-down">
+          &nbsp;&darr;
+        </span>
       </div>
-      <div @click="sortBooks('title')" class="bookshelf__sort-title">
+      <div class="bookshelf__sort-title" @click="sortBooks('title')">
         <span class="bookshelf__sort-text">По названию</span>
-        <span
-          :class="{
-            'bookshelf__arrow-up--active':
-              this.sortDirection === 'asc' && this.sortKey === 'title',
-          }"
-          class="bookshelf__arrow-up"
-          >&nbsp;&uarr;</span
-        >
-        <span
-          :class="{
-            'bookshelf__arrow-down--active':
-              this.sortDirection === 'desc' && this.sortKey === 'title',
-          }"
-          class="bookshelf__arrow-down"
-          >&nbsp;&darr;</span
-        >
+        <span :class="isArrowUpActiveTitle" class="bookshelf__arrow-up">
+          &nbsp;&uarr;
+        </span>
+        <span :class="isArrowDownActiveTitle" class="bookshelf__arrow-down">
+          &nbsp;&darr;
+        </span>
       </div>
-      <span @click="resetSort" class="bookshelf__reset">
+      <span class="bookshelf__reset" @click="resetSort">
         Сброс сортировки
       </span>
-      <span @click="$emit('addBook')" class="bookshelf__add">
+      <span class="bookshelf__add" @click="$emit('addBook')">
         Добавить книгу
       </span>
     </div>
@@ -59,11 +39,42 @@ export default {
       default: () => [],
     },
   },
+
   data() {
     return {
-      sortKey: "author",
+      sortKey: "author.lastName",
       sortDirection: "none",
     };
+  },
+
+  computed: {
+    isArrowUpActiveAuthor() {
+      return {
+        "bookshelf__arrow-up--active":
+          this.sortDirection === "asc" && this.sortKey === "author.lastName",
+      };
+    },
+
+    isArrowDownActiveAuthor() {
+      return {
+        "bookshelf__arrow-down--active":
+          this.sortDirection === "desc" && this.sortKey === "author.lastName",
+      };
+    },
+
+    isArrowUpActiveTitle() {
+      return {
+        "bookshelf__arrow-up--active":
+          this.sortDirection === "asc" && this.sortKey === "title",
+      };
+    },
+
+    isArrowDownActiveTitle() {
+      return {
+        "bookshelf__arrow-down--active":
+          this.sortDirection === "desc" && this.sortKey === "title",
+      };
+    },
   },
 
   methods: {

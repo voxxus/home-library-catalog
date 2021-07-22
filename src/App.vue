@@ -6,13 +6,16 @@
       :books="shelf"
       @addBook="addBook(shelf)"
     >
-      <app-book
-        v-for="book in shelf"
-        :key="book.id"
-        :editing-book-info="bookInfo"
-        :book="book"
-        @editBook="editBook"
-      />
+      <template v-if="shelf.length">
+        <app-book
+          v-for="book in shelf"
+          :key="book.id"
+          :editing-book-info="bookInfo"
+          :book="book"
+          @editBook="editBook"
+        />
+      </template>
+      <div v-else class="message">Полка пустая :(</div>
     </app-book-shelf>
 
     <app-book-form
@@ -58,7 +61,6 @@ import AppModalWindow from "@/components/AppModalWindow";
 
 export default {
   name: "App",
-
   components: {
     AppModalWindow,
     AppBookShelf,
@@ -172,5 +174,6 @@ export default {
 .message {
   margin: 25px 0;
   text-align: center;
+  color: #fff;
 }
 </style>
