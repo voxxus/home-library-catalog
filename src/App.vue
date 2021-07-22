@@ -1,32 +1,30 @@
 <template>
   <div id="app">
-    <app-list :items="shelves">
-      <template #items="{ item: books }">
-        <app-book-shelf @addBook="addBook(books)" :books="books">
-          <app-list v-if="books.length" :items="books">
-            <template #items="{ item: book }">
-              <app-book
-                @editBook="editBook"
-                :editing-book-info="bookInfo"
-                :book="book"
-              />
-            </template>
-          </app-list>
-          <div v-else class="message">В этой полке книг нет :(</div>
-        </app-book-shelf>
-      </template>
-    </app-list>
+    <app-book-shelf
+      v-for="(shelf, index) in shelves"
+      :key="index"
+      :books="shelf"
+      @addBook="addBook(shelf)"
+    >
+      <app-book
+        v-for="book in shelf"
+        :key="book.id"
+        :editing-book-info="bookInfo"
+        :book="book"
+        @editBook="editBook"
+      />
+    </app-book-shelf>
 
     <app-book-form
       v-if="showBookInfo"
-      @createBook="createBook"
-      @saveBookInfo="saveBookInfo"
-      @closeBookInfo="closeBookInfo"
-      @confirmDeleteBook="confirmDeleteBook"
       :show-book-form="showBookInfo"
       :book-info="bookInfo"
       :edit-mode="editMode"
       :next-book-id="nextBookId"
+      @createBook="createBook"
+      @saveBookInfo="saveBookInfo"
+      @closeBookInfo="closeBookInfo"
+      @confirmDeleteBook="confirmDeleteBook"
     />
 
     <app-modal-window v-if="showModalWindow">
@@ -37,12 +35,12 @@
         </p>
         <div class="modal-controls">
           <button
-            @click="deleteBook(bookToDelete)"
             class="button modal-btn-delete"
+            @click="deleteBook(bookToDelete)"
           >
             Удалить
           </button>
-          <button @click="closeModalWindow" class="button modal-btn-delete">
+          <button class="button modal-btn-delete" @click="closeModalWindow">
             Отмена
           </button>
         </div>
@@ -53,7 +51,6 @@
 
 <script>
 import booksData from "./mock/books.json";
-import AppList from "@/components/AppList";
 import AppBookShelf from "@/components/AppBookShelf";
 import AppBook from "@/components/AppBook";
 import AppBookForm from "@/components/AppBookInfo";
@@ -64,7 +61,6 @@ export default {
 
   components: {
     AppModalWindow,
-    AppList,
     AppBookShelf,
     AppBook,
     AppBookForm,
